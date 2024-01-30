@@ -590,7 +590,7 @@ phases:
 }
 
 variable "aft_global_customizations_terraform" {
-  description = "build spec config for to replace modules/aft-customizations/buildspecs/aft-account-customizations-terraform.yml"
+  description = "build spec config for to replace modules/aft-customizations/buildspecs/aft-global-customizations-terraform.yml"
   type        = string
   default     = <<EOF
 # Copyright Amazon.com, Inc. or its affiliates. All rights reserved.
@@ -806,7 +806,7 @@ phases:
 }
 
 variable "aft_account_customizations_terraform" {
-  description = "value"
+  description = "build spec config for to replace modules/aft-customizations/buildspecs/aft-account-customizations-terraform.yml"
   type        = string
   default     = <<EOF
   # Copyright Amazon.com, Inc. or its affiliates. All rights reserved.
@@ -969,7 +969,7 @@ phases:
 }
 
 variable "aft_lambda_layer" {
-  description = "value"
+    description = "build spec config for to replace modules/aft-lambda-layer/buildspecs/aft-lambda-layer.yml"
   type        = string
   default     = <<EOF
 # Copyright Amazon.com, Inc. or its affiliates. All rights reserved.
