@@ -17,7 +17,7 @@ locals {
   log_archive_bucket_object_expiration_days        = "365"
   lambda_layer_codebuild_delay                     = "420s"
   lambda_layer_python_version                      = chomp(trimspace(var.python_version))
-  lambda_runtime_python_version                    = format("%s%s", "python", chomp(trimspace(data.python_version)))
+  lambda_runtime_python_version                    = format("%s%s", "python", chomp(trimspace(var.python_version)))
   lambda_layer_name                                = "aft-common"
   create_role_lambda_function_name                 = "aft-account-provisioning-framework-create-aft-execution-role"
   tag_account_lambda_function_name                 = "aft-account-provisioning-framework-tag-account"
