@@ -969,7 +969,7 @@ phases:
 }
 
 variable "aft_lambda_layer" {
-    description = "build spec config for to replace modules/aft-lambda-layer/buildspecs/aft-lambda-layer.yml"
+  description = "build spec config for to replace modules/aft-lambda-layer/buildspecs/aft-lambda-layer.yml"
   type        = string
   default     = <<EOF
 # Copyright Amazon.com, Inc. or its affiliates. All rights reserved.
