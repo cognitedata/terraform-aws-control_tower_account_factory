@@ -455,17 +455,17 @@ phases:
           TF_S3_KEY=account-provisioning-customizations/terraform.tfstate
           cd /tmp
           echo "Installing Terraform"
-          curl -o terraform_${TF_VERSION}_linux_amd64.zip https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
-          unzip -o terraform_${TF_VERSION}_linux_amd64.zip && mv terraform /usr/bin
+          curl -o terraform_$TF_VERSION_linux_amd64.zip https://releases.hashicorp.com/terraform/$TF_VERSION/terraform_$TF_VERSION_linux_amd64.zip
+          unzip -o terraform_$TF_VERSION_linux_amd64.zip && mv terraform /usr/bin
           terraform -no-color --version
           cd $DEFAULT_PATH/terraform
           for f in *.jinja; do jinja2 $f -D timestamp="$TIMESTAMP" -D tf_distribution_type=$TF_DISTRIBUTION -D region=$TF_BACKEND_REGION -D provider_region=$CT_MGMT_REGION -D bucket=$TF_S3_BUCKET -D key=$TF_S3_KEY -D dynamodb_table=$TF_DDB_TABLE -D kms_key_id=$TF_KMS_KEY_ID -D aft_admin_role_arn=$AFT_EXEC_ROLE_ARN -D tf_version=$TF_VERSION >> ./$(basename $f .jinja).tf; done
           for f in *.tf; do echo "\n \n"; echo $f; cat $f; done
-          JSON=$(aws sts assume-role --role-arn ${AFT_ADMIN_ROLE_ARN} --role-session-name ${ROLE_SESSION_NAME})
+          JSON=$(aws sts assume-role --role-arn $AFT_ADMIN_ROLE_ARN --role-session-name $ROLE_SESSION_NAME)
           #Make newly assumed role default session
-          export AWS_ACCESS_KEY_ID=$(echo ${JSON} | jq --raw-output ".Credentials[\"AccessKeyId\"]")
-          export AWS_SECRET_ACCESS_KEY=$(echo ${JSON} | jq --raw-output ".Credentials[\"SecretAccessKey\"]")
-          export AWS_SESSION_TOKEN=$(echo ${JSON} | jq --raw-output ".Credentials[\"SessionToken\"]")
+          export AWS_ACCESS_KEY_ID=$(echo $JSON | jq --raw-output ".Credentials[\"AccessKeyId\"]")
+          export AWS_SECRET_ACCESS_KEY=$(echo $JSON | jq --raw-output ".Credentials[\"SecretAccessKey\"]")
+          export AWS_SESSION_TOKEN=$(echo $JSON | jq --raw-output ".Credentials[\"SessionToken\"]")
           terraform init -no-color
         else
           TF_BACKEND_REGION=$(aws ssm get-parameter --name "/aft/config/oss-backend/primary-region" --query "Parameter.Value" --output text)
@@ -549,17 +549,17 @@ phases:
           TF_S3_KEY=account-request/terraform.tfstate
           cd /tmp
           echo "Installing Terraform"
-          curl -o terraform_${TF_VERSION}_linux_amd64.zip https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
-          unzip -o terraform_${TF_VERSION}_linux_amd64.zip && mv terraform /usr/bin
+          curl -o terraform_$TF_VERSION_linux_amd64.zip https://releases.hashicorp.com/terraform/$TF_VERSION/terraform_$TF_VERSION_linux_amd64.zip
+          unzip -o terraform_$TF_VERSION_linux_amd64.zip && mv terraform /usr/bin
           terraform --version
           cd $DEFAULT_PATH/terraform
           for f in *.jinja; do jinja2 $f -D timestamp="$TIMESTAMP" -D tf_distribution_type=$TF_DISTRIBUTION -D provider_region=$CT_MGMT_REGION -D region=$TF_BACKEND_REGION -D bucket=$TF_S3_BUCKET -D key=$TF_S3_KEY -D dynamodb_table=$TF_DDB_TABLE -D kms_key_id=$TF_KMS_KEY_ID -D aft_admin_role_arn=$AFT_EXEC_ROLE_ARN -D tf_version=$TF_VERSION >> ./$(basename $f .jinja).tf; done
           for f in *.tf; do echo "\n \n"; echo $f; cat $f; done
-          JSON=$(aws sts assume-role --role-arn ${AFT_ADMIN_ROLE_ARN} --role-session-name ${ROLE_SESSION_NAME})
+          JSON=$(aws sts assume-role --role-arn $AFT_ADMIN_ROLE_ARN --role-session-name $ROLE_SESSION_NAME)
           #Make newly assumed role default session
-          export AWS_ACCESS_KEY_ID=$(echo ${JSON} | jq --raw-output ".Credentials[\"AccessKeyId\"]")
-          export AWS_SECRET_ACCESS_KEY=$(echo ${JSON} | jq --raw-output ".Credentials[\"SecretAccessKey\"]")
-          export AWS_SESSION_TOKEN=$(echo ${JSON} | jq --raw-output ".Credentials[\"SessionToken\"]")
+          export AWS_ACCESS_KEY_ID=$(echo $JSON | jq --raw-output ".Credentials[\"AccessKeyId\"]")
+          export AWS_SECRET_ACCESS_KEY=$(echo $JSON | jq --raw-output ".Credentials[\"SecretAccessKey\"]")
+          export AWS_SESSION_TOKEN=$(echo $JSON | jq --raw-output ".Credentials[\"SessionToken\"]")
           terraform init -no-color
         else
           TF_ORG_NAME=$(aws ssm get-parameter --name "/aft/config/terraform/org-name" --query "Parameter.Value" --output text)
@@ -678,9 +678,9 @@ phases:
 
           cd /tmp
           echo "Installing Terraform"
-          curl -q -o terraform_${TF_VERSION}_linux_amd64.zip https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
+          curl -q -o terraform_$TF_VERSION_linux_amd64.zip https://releases.hashicorp.com/terraform/$TF_VERSION/terraform_$TF_VERSION_linux_amd64.zip
           mkdir -p /opt/aft/bin
-          unzip -q -o terraform_${TF_VERSION}_linux_amd64.zip
+          unzip -q -o terraform_$TF_VERSION_linux_amd64.zip
           mv terraform /opt/aft/bin
           /opt/aft/bin/terraform -no-color --version
 
@@ -779,8 +779,8 @@ phases:
       # Install Terraform
       - cd /tmp
       - echo "Installing Terraform"
-      - curl -q -o terraform_${TF_VERSION}_linux_amd64.zip https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
-      - unzip -q -o terraform_${TF_VERSION}_linux_amd64.zip && mv terraform /usr/bin
+      - curl -q -o terraform_$TF_VERSION_linux_amd64.zip https://releases.hashicorp.com/terraform/$TF_VERSION/terraform_$TF_VERSION_linux_amd64.zip
+      - unzip -q -o terraform_$TF_VERSION_linux_amd64.zip && mv terraform /usr/bin
       - terraform --version
 
       # Install Python Dependencies
@@ -838,7 +838,7 @@ phases:
       - |
         if [[ ! -z "$CUSTOMIZATION" ]]; then  
           if [[ ! -d "$DEFAULT_PATH/$CUSTOMIZATION" ]]; then
-            echo "Error: ${CUSTOMIZATION} directory does not exist"
+            echo "Error: $CUSTOMIZATION directory does not exist"
             exit 1
           fi
           
@@ -913,9 +913,9 @@ phases:
 
             cd /tmp
             echo "Installing Terraform"
-            curl -q -o terraform_${TF_VERSION}_linux_amd64.zip https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
+            curl -q -o terraform_$TF_VERSION_linux_amd64.zip https://releases.hashicorp.com/terraform/$TF_VERSION/terraform_$TF_VERSION_linux_amd64.zip
             mkdir -p /opt/aft/bin
-            unzip -q -o terraform_${TF_VERSION}_linux_amd64.zip 
+            unzip -q -o terraform_$TF_VERSION_linux_amd64.zip 
             mv terraform /opt/aft/bin
             /opt/aft/bin/terraform -no-color --version
 
@@ -1003,7 +1003,7 @@ phases:
         fi
       - git config --global credential.helper '!aws codecommit credential-helper $@'
       - git config --global credential.UseHttpPath true
-      - echo "Building aft_common from ${URL}:${AWS_MODULE_GIT_REF}"
+      - echo "Building aft_common from $URL:$AWS_MODULE_GIT_REF"
       - git clone -b $AWS_MODULE_GIT_REF $AWS_MODULE_SOURCE aws-aft-core-framework
       - python3 -m pip install virtualenv
       - python3 -m venv .venv
@@ -1015,7 +1015,7 @@ phases:
       - ls
       - mv -v ./.venv/lib/ ./python/
       - zip -r layer.zip python
-      - aws s3 cp layer.zip s3://${BUCKET_NAME}/layer.zip
+      - aws s3 cp layer.zip s3://$BUCKET_NAME/layer.zip
 
   EOT
 }
