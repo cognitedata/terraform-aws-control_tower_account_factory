@@ -392,7 +392,7 @@ variable "aft_metrics_reporting" {
 # local_file replacement variables
 #########################################
 
-variable "version" {
+variable "aft_version" {
   type    = string
   default = "1.11.1"
 }
