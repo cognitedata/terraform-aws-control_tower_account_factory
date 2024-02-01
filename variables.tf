@@ -405,7 +405,7 @@ variable "python_version" {
 variable "ct_aft_account_provisioning_customizations" {
   description = "build spec config from modules/aft-code-repositories/buildspecs/ct-aft-account-provisioning-customizations.yml"
   type        = string
-  default     = <<EOF
+  default     = <<EOT
 # Copyright Amazon.com, Inc. or its affiliates. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -492,14 +492,14 @@ phases:
     commands:
       - echo "Post-Build"
 
-  EOF
+  EOT
 
 }
 
 variable "ct_aft_account_request" {
   description = "build spec config for to replace modules/aft-code-repositories/buildspecs/ct-aft-account-request.yml"
   type        = string
-  default     = <<EOF
+  default     = <<EOT
 # Copyright Amazon.com, Inc. or its affiliates. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -585,14 +585,14 @@ phases:
     commands:
       - echo "Post-Build"
 
-  EOF
+  EOT
 
 }
 
 variable "aft_global_customizations_terraform" {
   description = "build spec config for to replace modules/aft-customizations/buildspecs/aft-global-customizations-terraform.yml"
   type        = string
-  default     = <<EOF
+  default     = <<EOT
 # Copyright Amazon.com, Inc. or its affiliates. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -722,13 +722,13 @@ phases:
       - export AWS_PROFILE=aft-target
       - $DEFAULT_PATH/api_helpers/post-api-helpers.sh
 
-  EOF
+  EOT
 }
 
 variable "aft_create_pipeline" {
   description = "build spec config for to replace modules/aft-customizations/buildspecs/aft-create-pipeline.yml"
   type        = string
-  default     = <<EOF
+  default     = <<EOT
 # Copyright Amazon.com, Inc. or its affiliates. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -802,13 +802,13 @@ phases:
       - terraform init -no-color
       - terraform apply -var="account_id=$VENDED_ACCOUNT_ID" -no-color --auto-approve
 
-  EOF
+  EOT
 }
 
 variable "aft_account_customizations_terraform" {
   description = "build spec config for to replace modules/aft-customizations/buildspecs/aft-account-customizations-terraform.yml"
   type        = string
-  default     = <<EOF
+  default     = <<EOT
   # Copyright Amazon.com, Inc. or its affiliates. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -965,13 +965,13 @@ phases:
           $DEFAULT_PATH/$CUSTOMIZATION/api_helpers/post-api-helpers.sh
         fi
 
-  EOF
+  EOT
 }
 
 variable "aft_lambda_layer" {
   description = "build spec config for to replace modules/aft-lambda-layer/buildspecs/aft-lambda-layer.yml"
   type        = string
-  default     = <<EOF
+  default     = <<EOT
 # Copyright Amazon.com, Inc. or its affiliates. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -1017,5 +1017,5 @@ phases:
       - zip -r layer.zip python
       - aws s3 cp layer.zip s3://${BUCKET_NAME}/layer.zip
 
-  EOF
+  EOT
 }
