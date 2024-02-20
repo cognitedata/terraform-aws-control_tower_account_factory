@@ -46,7 +46,7 @@ resource "aws_codebuild_project" "account_request" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = var.account_provisioning_customizations_buildspec
+    buildspec = var.account_request_buildspec
   }
 
   vpc_config {
@@ -99,7 +99,7 @@ resource "aws_codebuild_project" "account_provisioning_customizations_pipeline" 
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = var.account_request_buildspec
+    buildspec = var.account_provisioning_customizations_buildspec
   }
 
   vpc_config {
