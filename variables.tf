@@ -838,7 +838,7 @@ phases:
       - |
         if [[ ! -z "$CUSTOMIZATION" ]]; then  
           if [[ ! -d "$DEFAULT_PATH/$CUSTOMIZATION" ]]; then
-            echo "Error: $\{CUSTOMIZATION\} directory does not exist"
+            echo "Error: $${CUSTOMIZATION} directory does not exist"
             exit 1
           fi
           
